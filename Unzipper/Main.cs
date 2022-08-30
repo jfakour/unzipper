@@ -28,15 +28,19 @@ namespace Unzipper
 
             foreach (string dirPath in arguments)
             {
+                List<string> zipFiles = Unzipper.GetAllZipFilesFrom(dirPath);
+                Console.WriteLine("Extracting " + zipFiles.Count + " zip files...");
                 extractedZipFiles = extractedZipFiles
-                    .Concat(Unzipper.UnzipFiles(dirPath))
+                    .Concat(Unzipper.UnzipFiles(zipFiles))
                     .ToDictionary(x=> x.Key, x=> x.Value);
             }
 
             foreach (string fp in extractedZipFiles.Keys)
             {
-                Console.WriteLine("* Extracting \"" + fp + "\" To \"" + extractedZipFiles[fp] + "\"") ;
+                Console.WriteLine("* Extracted \"" + fp + "\" To \"" + extractedZipFiles[fp] + "\"") ;
             }
+
+            Console.WriteLine("Done...");
 
         }
 
